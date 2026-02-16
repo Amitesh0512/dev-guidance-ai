@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ArrowRight, Zap } from "lucide-react";
 
 const Hero = () => {
@@ -34,13 +35,13 @@ const Hero = () => {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          <button className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-gradient-primary text-primary-foreground font-semibold text-sm tracking-wide transition-all hover:scale-105 glow-primary">
+          <Link to="/scan" className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-gradient-primary text-primary-foreground font-semibold text-sm tracking-wide transition-all hover:scale-105 glow-primary">
             Start Free Scan
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg border border-glow text-foreground font-medium text-sm hover:bg-secondary transition-colors">
+          </Link>
+          <Link to="/demo" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg border border-glow text-foreground font-medium text-sm hover:bg-secondary transition-colors">
             View Demo
-          </button>
+          </Link>
         </div>
 
         {/* Terminal preview */}
