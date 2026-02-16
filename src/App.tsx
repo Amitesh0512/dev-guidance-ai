@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/Overview";
 import Repositories from "./pages/dashboard/Repositories";
+import ScanHistory from "./pages/dashboard/ScanHistory";
 import ScanResults from "./pages/dashboard/ScanResults";
 import Usage from "./pages/dashboard/Usage";
 import Settings from "./pages/dashboard/Settings";
@@ -33,7 +34,8 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Overview />} />
             <Route path="repositories" element={<Repositories />} />
-            <Route path="scans" element={<ScanResults />} />
+            <Route path="scans" element={<ScanHistory />} />
+            <Route path="scans/:scanId" element={<ScanResults />} />
             <Route path="usage" element={<Usage />} />
             <Route path="settings" element={<Settings />} />
           </Route>
