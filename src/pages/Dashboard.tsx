@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft,
+  
   GitBranch,
   AlertTriangle,
   ShieldCheck,
@@ -116,16 +116,12 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background">
       {/* Top Bar */}
       <header className="fixed top-0 inset-x-0 z-50 glass border-b border-border h-14 flex items-center px-6">
-        <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mr-4">
-          <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm">Back</span>
-        </Link>
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2 mr-4">
           <div className="w-6 h-6 rounded bg-gradient-primary flex items-center justify-center">
             <span className="text-[10px] font-bold text-primary-foreground font-mono">DS</span>
           </div>
           <span className="font-semibold text-foreground text-sm">DevSense</span>
-        </div>
+        </Link>
         <div className="ml-auto flex items-center gap-3">
           <span className="text-xs text-muted-foreground font-mono">
             {MOCK_SCAN.scansUsed}/{MOCK_SCAN.scansLimit} scans

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft, ArrowRight, Play, GitBranch, AlertTriangle, CheckCircle2,
+  ArrowRight, Play, GitBranch, AlertTriangle, CheckCircle2,
   Activity, Lightbulb, ChevronRight, ChevronDown,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -86,16 +86,12 @@ export default function Demo() {
 
       <div className="relative z-10">
         <header className="h-16 flex items-center px-6 border-b border-border">
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-            <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back</span>
-          </Link>
-          <div className="ml-4 flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-md bg-gradient-primary flex items-center justify-center">
               <span className="text-[10px] font-bold text-primary-foreground font-mono">DS</span>
             </div>
             <span className="font-bold text-foreground text-sm">DevSense</span>
-          </div>
+          </Link>
         </header>
 
         <main className="max-w-3xl mx-auto px-6 pt-12 pb-20">
