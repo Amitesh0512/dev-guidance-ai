@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Download, ChevronRight, ChevronDown, Activity, AlertTriangle, GitBranch, Clock, ArrowLeft } from "lucide-react";
+import { Download, ChevronRight, ChevronDown, Activity, AlertTriangle, GitBranch, Clock, ArrowLeft, TrendingUp, TrendingDown, Minus, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -33,7 +33,32 @@ const MOCK_SCAN = {
   commit: "a3f8c91",
   scannedAt: "2026-02-16T09:32:00Z",
   score: 72,
+  circularDeps: 3,
+  layerViolations: 5,
+  couplingIssues: 2,
 };
+
+const MOCK_PREVIOUS_SCAN = {
+  commit: "b7e2d44",
+  scannedAt: "2026-02-10T14:20:00Z",
+  score: 65,
+  circularDeps: 4,
+  layerViolations: 7,
+  couplingIssues: 3,
+};
+
+function DeltaBadge({ current, previous, invert = false }: { current: number; previous: number; invert?: boolean }) {
+  const delta = current - previous;
+  if (delta === 0) return <span className="text-xs text-muted-foreground flex items-center gap-0.5"><Minus className="w-3 h-3" /> 0</span>;
+  // For issues, fewer is better (invert), for score, higher is better
+  const isPositive = invert ? delta < 0 : delta > 0;
+  return (
+    <span className={`text-xs font-medium flex items-center gap-0.5 ${isPositive ? "text-primary" : "text-destructive"}`}>
+      {isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+      {delta > 0 ? "+" : ""}{delta}
+    </span>
+  );
+}
 
 const MOCK_AI = {
   summary: "Your solution follows Clean Architecture patterns but has notable dependency leaks between Infrastructure and upper layers. The 3 circular dependencies in your service and domain layer signal tight coupling that will slow iteration. Addressing these will dramatically improve testability and deploy independence.",
@@ -92,6 +117,11 @@ export default function ScanResults() {
           <CardContent className="p-6 flex flex-col items-center">
             <ScoreRing score={MOCK_SCAN.score} />
             <p className="text-xs text-muted-foreground mt-3">Architecture Score</p>
+            {/* Score delta */}
+            <div className="mt-2 flex items-center gap-1.5">
+              <DeltaBadge current={MOCK_SCAN.score} previous={MOCK_PREVIOUS_SCAN.score} />
+              <span className="text-[10px] text-muted-foreground">vs previous</span>
+            </div>
           </CardContent>
         </Card>
 
@@ -102,8 +132,29 @@ export default function ScanResults() {
               Health Summary
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground leading-relaxed">{MOCK_AI.summary}</p>
+
+            {/* Metric comparison */}
+            <div className="grid grid-cols-3 gap-3 pt-2 border-t border-border/50">
+              {[
+                { label: "Circular Deps", current: MOCK_SCAN.circularDeps, previous: MOCK_PREVIOUS_SCAN.circularDeps },
+                { label: "Layer Violations", current: MOCK_SCAN.layerViolations, previous: MOCK_PREVIOUS_SCAN.layerViolations },
+                { label: "Coupling Issues", current: MOCK_SCAN.couplingIssues, previous: MOCK_PREVIOUS_SCAN.couplingIssues },
+              ].map((m) => (
+                <div key={m.label} className="text-center">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <span className="text-lg font-bold font-mono text-foreground">{m.current}</span>
+                    <DeltaBadge current={m.current} previous={m.previous} invert />
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">{m.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-[10px] text-muted-foreground">
+              Compared to scan <span className="font-mono">{MOCK_PREVIOUS_SCAN.commit}</span> on {new Date(MOCK_PREVIOUS_SCAN.scannedAt).toLocaleDateString()}
+            </p>
           </CardContent>
         </Card>
       </div>
