@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Github } from "lucide-react";
 
 const Navbar = () => {
@@ -21,9 +22,12 @@ const Navbar = () => {
           <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
             <Github className="w-5 h-5" />
           </a>
-          <button className="px-5 py-2 rounded-lg bg-gradient-primary text-primary-foreground text-sm font-semibold hover:scale-105 transition-transform">
+          <Link to="/login" className="px-4 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Log In
+          </Link>
+          <Link to="/signup" className="px-5 py-2 rounded-lg bg-gradient-primary text-primary-foreground text-sm font-semibold hover:scale-105 transition-transform">
             Sign Up
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
