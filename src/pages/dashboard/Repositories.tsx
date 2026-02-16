@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { FolderGit2, Play, Clock, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ConnectRepoModal from "@/components/dashboard/ConnectRepoModal";
 
 const MOCK_REPOS = [
   {
@@ -48,14 +50,17 @@ function ScoreBadge({ score }: { score: number | null }) {
 }
 
 export default function Repositories() {
+  const [connectOpen, setConnectOpen] = useState(false);
+
   return (
     <div className="max-w-4xl space-y-6">
+      <ConnectRepoModal open={connectOpen} onOpenChange={setConnectOpen} />
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold text-foreground">Repositories</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Manage your connected .NET repositories</p>
         </div>
-        <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
+        <button onClick={() => setConnectOpen(true)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
           <FolderGit2 className="w-4 h-4" />
           Connect Repo
         </button>
